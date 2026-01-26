@@ -1,0 +1,81 @@
+{
+  "prisma.pinToPrisma6": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "explorer.compactFolders": false,
+  "better-comments.highlightPlainText": false,
+  "better-comments.multilineComments": true,
+  "workbench.colorTheme": "Monokai Dimmed",
+  "workbench.iconTheme": "material-icon-theme",
+  "material-icon-theme.files.associations": {
+    "*.servie.ts": "cobol"
+  },
+  "material-icon-theme.folders.associations": {
+    "dao": "scala"
+  },
+  "material-icon-theme.folders.customClones": [
+    {
+      "name": "socket-connection",
+      "base": "connection",
+      "color": "teal-400",
+      "lightColor": "teal-400",
+      "folderNames": ["sockets"],
+      "rootFolderNames": ["sockets"]
+    },
+    {
+      "name": "utils",
+      "base": "metro",
+      "color": "green-600",
+      "lightColor": "green-600",
+      "folderNames": ["utils"],
+      "rootFolderNames": ["utils"]
+    }
+  ],
+  "better-comments.tags": [
+    {
+      "tag": "!",
+      "color": "#FF2D00",
+      "strikethrough": false,
+      "underline": false,
+      "backgroundColor": "transparent",
+      "bold": false,
+      "italic": false
+    },
+    {
+      "tag": "?",
+      "color": "#3498DB",
+      "strikethrough": false,
+      "underline": false,
+      "backgroundColor": "transparent",
+      "bold": false,
+      "italic": false
+    },
+    {
+      "tag": "//",
+      "color": "#474747",
+      "strikethrough": true,
+      "underline": false,
+      "backgroundColor": "transparent",
+      "bold": false,
+      "italic": false
+    },
+    {
+      "tag": "todo",
+      "color": "#FF8C00",
+      "strikethrough": false,
+      "underline": false,
+      "backgroundColor": "transparent",
+      "bold": false,
+      "italic": false
+    },
+    {
+      "tag": "*",
+      "color": "#98C379",
+      "strikethrough": false,
+      "underline": false,
+      "backgroundColor": "transparent",
+      "bold": false,
+      "italic": false
+    }
+  ]
+}
