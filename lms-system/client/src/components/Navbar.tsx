@@ -5,7 +5,7 @@ const Navbar = () => {
   const user = false;
 
   return (
-    <header>
+    <header className="header">
       <div className="logo">Logo</div>
       <nav>
         <ul>
@@ -18,7 +18,7 @@ const Navbar = () => {
                   <Link to="/login">Login</Link>
                 </Button>
                 <Button asChild>
-                  <Link to="/dashboard">Dashboard</Link>
+                  <Link to="/sign-up">SignUp</Link>
                 </Button>
               </>
             ) : (
