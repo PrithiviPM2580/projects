@@ -2,12 +2,15 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { BASE_URL } from "@/constants";
 import axios from "axios";
-import React, { use, useState } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import { useDispatch } from "react-redux";
+import { setAuthUser } from "@/redux/authSlice";
 
 const LoginPage = () => {
   const navigate = useNavigate();
+  const dispach = useDispatch();
   const [user, setuser] = useState({
     email: "",
     password: "",
@@ -32,6 +35,7 @@ const LoginPage = () => {
 
       if (response.data?.success) {
         navigate("/");
+        dispach(setAuthUser(response.data?.user));
         toast.success(response.data.message || "Login successful!");
       } else {
         toast.error(response.data.message || "Login failed. Please try again.");

@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom";
 import { Button } from "./ui/button";
+import { useSelector } from "react-redux";
+import type { RootState } from "@/redux/store";
 
 const Navbar = () => {
-  const user = false;
+  const { user } = useSelector((store: RootState) => store.auth);
 
   return (
     <header className="header">
