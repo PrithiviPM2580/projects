@@ -8,7 +8,7 @@ const Navbar = () => {
     <header className="header">
       <div className="text-sm md:text-xl">Logo</div>
       <nav>
-        <ul className="flex-center gap-4">
+        <ul className="flex-center gap-2 md:gap-6">
           <li>
             <Link to="/">Home</Link>
           </li>
@@ -20,7 +20,7 @@ const Navbar = () => {
               <li>
                 <Button
                   asChild
-                  className="bg-jordy-blue-600 hover:bg-jordy-blue-400 text-sm md:text-xl px-3 py-2 md:px-6 md:py-6"
+                  className="bg-jordy-blue-600 hover:bg-jordy-blue-400 text-sm md:text-xl px-3 py-0 md:px-6 md:py-6"
                 >
                   <Link to="/login">Login</Link>
                 </Button>
@@ -28,7 +28,7 @@ const Navbar = () => {
               <li>
                 <Button
                   asChild
-                  className="bg-transparent border border-jordy-blue-600 text-sm md:text-xl px-3 py-2 md:px-6 md:py-6"
+                  className="bg-transparent border border-jordy-blue-600 text-sm md:text-xl px-3 py-0 md:px-6 md:py-6"
                 >
                   <Link to="/sign-up">SignUp</Link>
                 </Button>
@@ -44,7 +44,7 @@ const Navbar = () => {
               <li>
                 <Button
                   asChild
-                  className="bg-jordy-blue-600 hover:bg-jordy-blue-400 text-sm md:text-xl px-3 py-2 md:px-6 md:py-6"
+                  className="bg-jordy-blue-600 hover:bg-jordy-blue-400 text-sm md:text-xl px-3 py-0 md:px-6 md:py-6"
                 >
                   <Link to="/login">Logout</Link>
                 </Button>
