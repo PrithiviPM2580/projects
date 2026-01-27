@@ -11,7 +11,7 @@ router.route("/health").get((req, res) => {
   res.status(200).send("OK");
 });
 
-router.use("/api/auth", userRoute);
+router.use("/api/v1/auth", userRoute);
 
 router.use((req, res) => {
   res.status(404).send("Route not found");
