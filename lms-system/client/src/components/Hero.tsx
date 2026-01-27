@@ -20,9 +20,9 @@ const Hero = () => {
           <div className="flex w-full items-stretch overflow-hidden rounded-lg bg-white">
             <Input
               placeholder="Search your course here"
-              className="text-gray-700  rounded-none h-16 flex-4 min-w-0 border-0 focus-visible:ring-0 focus-visible:outline-none"
+              className="text-gray-700  rounded-none h-10 md:h-16 flex-4 min-w-0 border-0 focus-visible:ring-0 focus-visible:outline-none"
             />
-            <Button className="w-full h-16 cursor-pointer rounded-none bg-jordy-blue-600 hover:bg-jordy-blue-400 flex-1">
+            <Button className="w-full h-10 md:h-16 cursor-pointer rounded-none bg-jordy-blue-600 hover:bg-jordy-blue-400 flex-1">
               Search{" "}
               <span>
                 <Search />
