@@ -1,13 +1,14 @@
 import { Input } from "@/components/ui/input";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 import axios from "axios";
 import { BASE_URL } from "@/constants";
 import { toast } from "sonner";
 
 const SignUpPage = () => {
+  const navigate = useNavigate();
   const [user, setUser] = useState({
     name: "",
     email: "",
@@ -33,6 +34,7 @@ const SignUpPage = () => {
       });
 
       if (response.data?.success) {
+        navigate("/login");
         toast.success(
           response.data.message || "Sign up successful! Please log in.",
         );
