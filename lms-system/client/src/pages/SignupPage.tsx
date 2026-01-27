@@ -2,24 +2,76 @@ import { Input } from "@/components/ui/input";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import axios from "axios";
+import { BASE_URL } from "@/constants";
+import { toast } from "sonner";
 
 const SignUpPage = () => {
+  const [user, setUser] = useState({
+    name: "",
+    email: "",
+    password: "",
+    role: "student",
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setUser((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(`${BASE_URL}/sign-up`, user, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (response.data?.success) {
+        toast.success(
+          response.data.message || "Sign up successful! Please log in.",
+        );
+      } else {
+        toast.error(
+          response.data.message || "Sign up failed. Please try again.",
+        );
+      }
+    } catch (error) {
+      console.error("Error during sign up:", error);
+    }
+  };
   return (
     <div className="w-full h-screen fixed overflow-hidden flex-center ">
       <div className="form-container sign-up">
         <p className="title">Create account</p>
-        <form className="form">
+        <form className="form" onSubmit={handleSubmit}>
           <div className="flex flex-col gap-2">
             <Label htmlFor="name">Name</Label>
-            <Input id="name" type="text" className="input" placeholder="Name" />
+            <Input
+              id="name"
+              type="text"
+              name="name"
+              className="input"
+              placeholder="Name"
+              value={user.name}
+              onChange={handleChange}
+            />
           </div>
           <div className="flex flex-col gap-2">
             <Label htmlFor="email">Email</Label>
             <Input
               id="email"
               type="email"
+              name="email"
               className="input"
               placeholder="Email"
+              value={user.email}
+              onChange={handleChange}
             />
           </div>
           <div className="flex flex-col gap-2">
@@ -27,20 +79,32 @@ const SignUpPage = () => {
             <Input
               id="password"
               type="password"
+              name="password"
               className="input"
               placeholder="Password"
+              value={user.password}
+              onChange={handleChange}
             />
           </div>
-          <RadioGroup defaultValue="option-one" className="flex flex-col gap-4">
+          <RadioGroup
+            value={user.role}
+            onValueChange={(value) =>
+              setUser((prev) => ({
+                ...prev,
+                role: value,
+              }))
+            }
+            className="flex flex-col gap-4"
+          >
             <Label>Role</Label>
             <div className="flex gap-2">
               <div className="flex items-center gap-1">
-                <RadioGroupItem value="option-one" id="option-one" />
-                <Label htmlFor="option-one">Student</Label>
+                <RadioGroupItem value="student" id="student" />
+                <Label htmlFor="student">Student</Label>
               </div>
               <div className="flex items-center gap-1">
-                <RadioGroupItem value="option-two" id="option-two" />
-                <Label htmlFor="option-two">Instructor</Label>
+                <RadioGroupItem value="instructor" id="instructor" />
+                <Label htmlFor="instructor">Instructor</Label>
               </div>
             </div>
           </RadioGroup>
