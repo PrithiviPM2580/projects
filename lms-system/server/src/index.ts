@@ -1,1 +1,2 @@
-console.log("Hello");
+import "dotenv/config";
+import "./server.js";
