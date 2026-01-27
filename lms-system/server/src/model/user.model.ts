@@ -9,6 +9,7 @@ export interface IUser extends Document {
   role: "student" | "instructor";
   avatarUrl?: string;
   enrolledCourses: mongoose.Types.ObjectId[];
+  comparePassword(candidatePassword: string): boolean;
   createdAt: Date;
   updatedAt: Date;
 }
