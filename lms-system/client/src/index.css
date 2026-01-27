@@ -162,4 +162,45 @@
   .hero-h1 {
     @apply w-full text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-semibold leading-10 sm:leading-12 md:leading-14 lg:leading-20;
   }
+  .form-container {
+    @apply w-96 bg-white shadow-lg box-border px-8 py-5 rounded-lg;
+  }
+
+  .login {
+    @apply h-[380px];
+  }
+
+  .sign-up {
+    @apply h-[520px];
+  }
+
+  .title {
+    @apply text-center text-[28px] font-semibold mt-2.5 mb-[30px] mx-0;
+  }
+  .form {
+    @apply w-full flex flex-col gap-[18px] mb-[15px];
+  }
+  .input {
+    @apply border box-border px-[15px] py-3 rounded-[10px] border-solid border-[#c0c0c0];
+    outline: 0 !important;
+  }
+  .page-link {
+    @apply underline text-end text-[#747474] decoration-[#747474] m-0;
+  }
+  .page-link-label {
+    @apply cursor-pointer text-[9px] font-bold hover:text-black;
+  }
+  .form-btn {
+    @apply text-[white] bg-jordy-blue-600 hover:bg-jordy-blue-400 cursor-pointer shadow-[rgba(0,0,0,0.24)_0px_3px_8px] px-[15px] py-2.5 rounded-[20px] border-0 active:shadow-none;
+    outline: 0 !important;
+  }
+  .sign-up-label {
+    @apply text-[10px] text-[#747474] m-0;
+  }
+  .sign-up-link {
+    @apply text-[11px] text-jordy-blue-600 underline  text-border cursor-pointer font-semibold ml-px;
+  }
+  .buttons-container {
+    @apply w-full flex flex-col justify-start gap-[15px] mt-5;
+  }
 }
