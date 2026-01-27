@@ -27,7 +27,7 @@ const SignUpPage = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`${BASE_URL}/sign-up`, user, {
+      const response = await axios.post(`${BASE_URL}/register`, user, {
         headers: {
           "Content-Type": "application/json",
         },
