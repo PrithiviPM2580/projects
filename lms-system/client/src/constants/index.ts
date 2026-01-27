@@ -67,3 +67,5 @@ export const COURSES: Courses[] = [
       "Learn version control with Git and GitHub, including branching, merging, and collaboration.",
   },
 ];
+
+export const BASE_URL = "http://localhost:3000/api/v1/auth";
