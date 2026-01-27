@@ -31,7 +31,7 @@ const LoginPage = () => {
       });
 
       if (response.data?.success) {
-        navigate("/dashboard");
+        navigate("/");
         toast.success(response.data.message || "Login successful!");
       } else {
         toast.error(response.data.message || "Login failed. Please try again.");
