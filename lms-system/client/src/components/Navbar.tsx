@@ -39,9 +39,11 @@ const Navbar = () => {
           ) : (
             <>
               <li>
-                <div className="h-12 w-12 rounded-full bg-white">
-                  <img src="" alt="Logo" />
-                </div>
+                <Link to="/profile">
+                  <div className="h-12 w-12 rounded-full bg-white">
+                    <img src="" alt="Logo" />
+                  </div>
+                </Link>
               </li>
               <li>
                 <Button
