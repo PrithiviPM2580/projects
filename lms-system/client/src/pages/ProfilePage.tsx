@@ -13,9 +13,10 @@ import {
 import { Label } from "@radix-ui/react-label";
 import { Input } from "@/components/ui/input";
 import { useSelector } from "react-redux";
+import { type RootState } from "@/redux/store";
 
 const ProfilePage = () => {
-  const { user } = useSelector((store) => store.auth);
+  const { user } = useSelector((store: RootState) => store.auth);
   return (
     <section className="padding flex flex-col gap-4 md:gap-12">
       <div className="flex-col md:flex-row flex-center gap-6 rounded-xl px-6 py-4 md:py-12 shadow-lg">
