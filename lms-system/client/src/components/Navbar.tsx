@@ -1,10 +1,31 @@
 import { Link } from "react-router-dom";
 import { Button } from "./ui/button";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "@/redux/store";
+import axios from "axios";
+import { BASE_URL } from "@/constants";
+import { setAuthUser } from "@/redux/authSlice";
+import { toast } from "sonner";
 
 const Navbar = () => {
+  const dispatch = useDispatch();
   const { user } = useSelector((store: RootState) => store.auth);
+
+  const logoutHandler = async () => {
+    try {
+      const response = await axios.post(`${BASE_URL}/api/v1/auth/logout`, {
+        withCredentials: true,
+      });
+
+      if (response.data.success) {
+        dispatch(setAuthUser(null));
+        toast.success("Logout Successful");
+      }
+    } catch (error) {
+      console.error("Logout failed:", error);
+      toast.error("Logout Failed. Please try again.");
+    }
+  };
 
   return (
     <header className="header">
@@ -47,6 +68,7 @@ const Navbar = () => {
               </li>
               <li>
                 <Button
+                  onClick={logoutHandler}
                   asChild
                   className="bg-jordy-blue-600 hover:bg-jordy-blue-400 text-sm md:text-xl px-3 py-0 md:px-6 md:py-6"
                 >
