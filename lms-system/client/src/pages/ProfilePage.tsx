@@ -12,27 +12,31 @@ import {
 } from "@/components/ui/dialog";
 import { Label } from "@radix-ui/react-label";
 import { Input } from "@/components/ui/input";
+import { useSelector } from "react-redux";
 
 const ProfilePage = () => {
+  const { user } = useSelector((store) => store.auth);
   return (
     <section className="padding flex flex-col gap-4 md:gap-12">
       <div className="flex-col md:flex-row flex-center gap-6 rounded-xl px-6 py-4 md:py-12 shadow-lg">
-        <div className="img h-60 w-60 rounded-full bg-slate-200"></div>
+        <div className="img h-60 w-60 rounded-full bg-slate-200">
+          <img src={user?.picture} alt={user?.name || "User Picture"} />
+        </div>
         <div className="profile-details flex flex-col gap-2">
           <h1 className="text-jordy-blue-600 text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold">
-            Welcome, Rohit
+            Welcome, {user?.name || "User"}!
           </h1>
           <div className="profile-email gap-2 md:text-left flex">
             <h4 className="font-semibold">Email:</h4>
-            <p>prithivi@example.com</p>
+            <p>{user?.email || "No email provided"}</p>
           </div>
           <div className="profile-role gap-2 md:text-left flex">
             <h4 className="font-semibold">Role:</h4>
-            <p>Student</p>
+            <p>{user?.role || "No role provided"}</p>
           </div>
           <div className="profile-bio gap-2 md:text-left flex">
             <h4 className="font-semibold">Bio:</h4>
-            <p>Lorem ipsum dolor sit amet consectetur.</p>
+            <p>{user?.description || "No description provided"}</p>
           </div>
           <Dialog>
             <DialogTrigger className="cursor-pointer px-4 py-3 rounded-xl text-white bg-jordy-blue-600 hover:bg-jordy-blue-400">
@@ -47,11 +51,15 @@ const ProfilePage = () => {
               </DialogHeader>
               <div className="flex gap-2">
                 <Label htmlFor="name">Name</Label>
-                <Input id="name" type="text" />
+                <Input id="name" type="text" defaultValue={user?.name} />
               </div>
               <div className="flex gap-2">
                 <Label htmlFor="description">Description</Label>
-                <Input id="description" type="text" />
+                <Input
+                  id="description"
+                  type="text"
+                  defaultValue={user?.description}
+                />
               </div>
               <div className="flex gap-2">
                 <Label htmlFor="picture">Picture</Label>
