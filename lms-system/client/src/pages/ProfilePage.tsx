@@ -1,6 +1,17 @@
 import { Button } from "@/components/ui/button";
 import CourseCard from "@/components/CourseCard";
 import { COURSES } from "@/constants";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  DialogFooter,
+} from "@/components/ui/dialog";
+import { Label } from "@radix-ui/react-label";
+import { Input } from "@/components/ui/input";
 
 const ProfilePage = () => {
   return (
@@ -23,9 +34,36 @@ const ProfilePage = () => {
             <h4 className="font-semibold">Bio:</h4>
             <p>Lorem ipsum dolor sit amet consectetur.</p>
           </div>
-          <Button className="cursor-pointer bg-jordy-blue-600 hover:bg-jordy-blue-400">
-            Edit Profile
-          </Button>
+          <Dialog>
+            <DialogTrigger className="cursor-pointer px-4 py-3 rounded-xl text-white bg-jordy-blue-600 hover:bg-jordy-blue-400">
+              Edit Profile
+            </DialogTrigger>
+            <DialogContent className="flex flex-col gap-6">
+              <DialogHeader>
+                <DialogTitle className="text-center">Edit Profile</DialogTitle>
+                <DialogDescription className="text-center">
+                  Profile editing form goes here.
+                </DialogDescription>
+              </DialogHeader>
+              <div className="flex gap-2">
+                <Label htmlFor="name">Name</Label>
+                <Input id="name" type="text" />
+              </div>
+              <div className="flex gap-2">
+                <Label htmlFor="description">Description</Label>
+                <Input id="description" type="text" />
+              </div>
+              <div className="flex gap-2">
+                <Label htmlFor="picture">Picture</Label>
+                <Input id="picture" type="file" accept="image/*" />
+              </div>
+              <DialogFooter>
+                <Button className="bg-jordy-blue-600 hover:bg-jordy-blue-400 py-3">
+                  Save Changes
+                </Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
         </div>
       </div>
       <div className="shadow-lg p-4 md:p-6 lg:p-10">
