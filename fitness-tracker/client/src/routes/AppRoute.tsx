@@ -16,7 +16,7 @@ const AppRoute = () => {
     return isUserFetched ? <LoginPage /> : <SpinnerCustom />;
   }
   if (!onboardingCompleted) {
-    <OnboardingPage />;
+    return <OnboardingPage />;
   }
   return (
     <Routes>
