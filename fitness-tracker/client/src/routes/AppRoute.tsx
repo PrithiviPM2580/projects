@@ -4,8 +4,16 @@ import FoodLogPage from "@/pages/FoodLogPage";
 import LayoutPage from "@/pages/LayoutPage";
 import ProfilePage from "@/pages/ProfilePage";
 import { Routes, Route } from "react-router-dom";
+import useAppContext from "@/hooks/useAppContext";
+import LoginPage from "@/pages/LoginPage";
+import { SpinnerCustom } from "@/components/ui/spinner";
 
 const AppRoute = () => {
+  const { user, isUserFetched, onboardingCompleted } = useAppContext();
+
+  if (!user) {
+    return isUserFetched ? <LoginPage /> : <SpinnerCustom />;
+  }
   return (
     <Routes>
       <Route path="/" element={<LayoutPage />} />
