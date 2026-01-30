@@ -7,12 +7,16 @@ import { Routes, Route } from "react-router-dom";
 import useAppContext from "@/hooks/useAppContext";
 import LoginPage from "@/pages/LoginPage";
 import { SpinnerCustom } from "@/components/ui/spinner";
+import OnboardingPage from "@/pages/OnboardingPage";
 
 const AppRoute = () => {
   const { user, isUserFetched, onboardingCompleted } = useAppContext();
 
   if (!user) {
     return isUserFetched ? <LoginPage /> : <SpinnerCustom />;
+  }
+  if (!onboardingCompleted) {
+    <OnboardingPage />;
   }
   return (
     <Routes>
