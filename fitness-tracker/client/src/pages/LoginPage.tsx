@@ -25,26 +25,28 @@ import {
   EyeOffIcon,
   EyeIcon,
 } from "lucide-react";
-import { useNavigate } from "react-router-dom";
 import useAppContext from "@/hooks/useAppContext";
 
-const formSchema = z.object({
-  userName: z.string().min(3, "Username must be at least 3 characters"),
+const loginSchema = z.object({
   email: z.email("Invalid email address"),
   password: z.string().min(6, "Password must be at least 6 characters"),
 });
 
+const signupSchema = loginSchema.extend({
+  userName: z.string().min(3, "Username must be at least 3 characters"),
+});
+
 type Auth = "login" | "sign-up";
+type FormData = z.infer<typeof loginSchema> & { userName?: string };
 
 const LoginPage = () => {
   const [auth, setAuth] = useState<Auth>("login");
   const [showPassword, setShowPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const navigate = useNavigate();
-  const { user, login, signup } = useAppContext();
+  const { login, signup } = useAppContext();
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<FormData>({
+    resolver: zodResolver(auth === "login" ? loginSchema : signupSchema),
     defaultValues: {
       userName: "",
       email: "",
@@ -52,26 +54,31 @@ const LoginPage = () => {
     },
   });
 
-  async function onSubmit(data: z.infer<typeof formSchema>) {
+  async function onSubmit(data: FormData) {
     setIsSubmitting(true);
-    if (auth === "login") {
-      await login({
-        email: data.email,
-        password: data.password,
-      });
-    } else {
-      await signup({
-        username: data.userName,
-        email: data.email,
-        password: data.password,
-      });
+    try {
+      if (auth === "login") {
+        await login({
+          email: data.email,
+          password: data.password,
+        });
+      } else {
+        if (!data.userName) return;
+        await signup({
+          username: data.userName,
+          email: data.email,
+          password: data.password,
+        });
+      }
+      toast.success(
+        `Successfully ${auth === "login" ? "logged in" : "registered"}`,
+      );
+    } catch (error) {
+      console.error("Submission error:", error);
+      toast.error("An error occurred during submission. Please try again.");
+    } finally {
+      setIsSubmitting(false);
     }
-    toast.success(
-      `Successfully ${auth === "login" ? "logged in" : "registered"}`,
-    );
-    setIsSubmitting(false);
-
-    navigate("/dashboard");
   }
 
   return (
@@ -88,7 +95,9 @@ const LoginPage = () => {
         <CardContent className="w-full">
           <form
             id="form-rhf-demo"
-            onSubmit={form.handleSubmit(onSubmit)}
+            onSubmit={form.handleSubmit((data) => {
+              onSubmit(data);
+            })}
             className="login-form"
           >
             <FieldGroup className="gap-4">
