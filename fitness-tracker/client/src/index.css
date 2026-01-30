@@ -40,6 +40,17 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+  --color-mint-green-50: #f1feef;
+  --color-mint-green-100: #deffd9;
+  --color-mint-green-200: #bffcb6;
+  --color-mint-green-300: #a0f994;
+  --color-mint-green-400: #52ea3e;
+  --color-mint-green-500: #2ad314;
+  --color-mint-green-600: #1caf0a;
+  --color-mint-green-700: #19890c;
+  --color-mint-green-800: #196c0f;
+  --color-mint-green-900: #15580f;
+  --color-mint-green-950: #063102;
 }
 
 :root {
@@ -124,6 +135,22 @@
   .flex-center {
     @apply flex items-center justify-center;
   }
+
+  .theme-text {
+    @apply text-gray-900 dark:text-gray-50;
+  }
+  .theme-bg {
+    @apply bg-gray-900 dark:bg-gray-50;
+  }
+  .heading-h1 {
+    @apply text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold;
+  }
+  .heading-h2 {
+    @apply text-xl sm:text-2xl md:text-3xl lg:text-4xl font-semibold;
+  }
+  .heading-h3 {
+    @apply text-base sm:text-lg md:text-xl lg:text-2xl font-semibold;
+  }
 }
 
 @layer utilities {
@@ -150,7 +177,7 @@
   }
 
   .login-form {
-    @apply flex w-full flex-col max-w-80;
+    @apply flex w-full flex-col;
   }
 
   .login-form-container {
@@ -158,11 +185,11 @@
   }
 
   .login-input {
-    @apply pl-10 rounded-md ring ring-gray-200 dark:ring-slate-700 bg-white dark:bg-slate-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-green-600 dark:focus:ring-green-500 outline-none p-2.5 w-full transition-all duration-200;
+    @apply text-base pl-16 py-6 rounded-md ring ring-gray-200 dark:ring-slate-700 bg-white dark:bg-slate-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-mint-green-600 dark:focus:ring-mint-green-500 outline-none  w-full transition-all duration-200;
   }
 
   .login-button {
-    @apply mt-6 py-2.5 w-full rounded-md bg-green-600 text-white transition hover:bg-green-700 disabled:opacity-60 text-sm;
+    @apply mt-6 py-6 w-full rounded-md bg-mint-green-600 text-white transition hover:bg-mint-green-700 disabled:opacity-60 text-sm;
   }
 
   /* Dashboard Page */
