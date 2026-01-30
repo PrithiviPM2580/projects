@@ -3,6 +3,7 @@ import { ageRanges, goalOptions } from "@/assets/seeder";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Slider } from "@/components/ui/slider";
 import useAppContext from "@/hooks/useAppContext";
 import { cn } from "@/lib/utils";
 import { type ProfileFormData, type UserData } from "@/types";
@@ -25,8 +26,8 @@ const OnboardingPage = () => {
     weight: undefined as any,
     height: undefined as any,
     goal: "maintain",
-    dailyCalorieIntake: 2000,
-    dailyCalorieBurn: 400,
+    dailyCalorieIntake: undefined as any,
+    dailyCalorieBurn: undefined as any,
   });
 
   const totalSteps = 3;
@@ -243,6 +244,50 @@ const OnboardingPage = () => {
                     {goal.label}
                   </Button>
                 ))}
+              </div>
+
+              <div className="border-t border-slate-200 dark:border-slate-700 my-6 max-w-lg" />
+
+              <div className="space-y-8 max-w-lg">
+                <h3 className="text-base font-semibold theme-text">
+                  Daily Targets
+                </h3>
+                <div className="space-y-6">
+                  <div>
+                    <div className="flex justify-between mb-2">
+                      <Label className="theme-text">Daily Calorie Intake</Label>
+                      <span className="theme-text font-semibold">
+                        {formData.dailyCalorieIntake}
+                      </span>
+                    </div>
+                    <Slider
+                      min={120}
+                      max={4000}
+                      step={50}
+                      value={[formData.dailyCalorieIntake]}
+                      onValueChange={(value) =>
+                        updateField("dailyCalorieIntake", value[0])
+                      }
+                      dir="ltr"
+                    />
+                  </div>
+                  <div className="flex justify-between mb-2">
+                    <Label className="theme-text">Daily Calorie Burn</Label>
+                    <span className="theme-text font-semibold">
+                      {formData.dailyCalorieBurn}
+                    </span>
+                  </div>
+                  <Slider
+                    min={100}
+                    max={2000}
+                    step={50}
+                    value={[formData.dailyCalorieBurn]}
+                    onValueChange={(value) =>
+                      updateField("dailyCalorieBurn", value[0])
+                    }
+                    dir="ltr"
+                  />
+                </div>
               </div>
             </div>
           )}
