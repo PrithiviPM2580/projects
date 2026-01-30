@@ -137,10 +137,10 @@
   }
 
   .theme-text {
-    @apply text-gray-900 dark:text-gray-50;
+    @apply text-slate-950 dark:text-white;
   }
   .theme-bg {
-    @apply bg-gray-900 dark:bg-gray-50;
+    @apply bg-white dark:bg-slate-950;
   }
   .heading-h1 {
     @apply text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold;
