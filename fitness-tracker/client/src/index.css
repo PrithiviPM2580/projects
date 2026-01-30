@@ -1,8 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-@custom-variant dark (&:is(.dark *));
-
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -153,6 +151,10 @@
 
   .login-form {
     @apply flex w-full flex-col max-w-80;
+  }
+
+  .login-form-container {
+    @apply w-full max-w-md rounded-2xl border border-white/30 dark:border-white/10 bg-white/50 dark:bg-slate-900/40 shadow-xl backdrop-blur-xl p-6 sm:p-8 transition-colors duration-200;
   }
 
   .login-input {
