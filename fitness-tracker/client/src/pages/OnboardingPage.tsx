@@ -257,7 +257,7 @@ const OnboardingPage = () => {
                     <div className="flex justify-between mb-2">
                       <Label className="theme-text">Daily Calorie Intake</Label>
                       <span className="theme-text font-semibold">
-                        {formData.dailyCalorieIntake}
+                        {formData.dailyCalorieIntake} kcal
                       </span>
                     </div>
                     <Slider
@@ -268,13 +268,12 @@ const OnboardingPage = () => {
                       onValueChange={(value) =>
                         updateField("dailyCalorieIntake", value[0])
                       }
-                      dir="ltr"
                     />
                   </div>
                   <div className="flex justify-between mb-2">
                     <Label className="theme-text">Daily Calorie Burn</Label>
                     <span className="theme-text font-semibold">
-                      {formData.dailyCalorieBurn}
+                      {formData.dailyCalorieBurn} kcal
                     </span>
                   </div>
                   <Slider
@@ -285,7 +284,6 @@ const OnboardingPage = () => {
                     onValueChange={(value) =>
                       updateField("dailyCalorieBurn", value[0])
                     }
-                    dir="ltr"
                   />
                 </div>
               </div>
