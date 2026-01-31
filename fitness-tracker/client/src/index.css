@@ -256,4 +256,14 @@
   .slldebar-theme {
     @apply flex items-center gap-3 px-4 py-2.5 mt-6 w-full border border-slate-200 dark:border-slate-700 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer transition-all duration-200 text-slate-500 dark:text-slate-400;
   }
+  .bottom-nav {
+    @apply fixed bottom-0 left-0 right-0 bg-white dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800 flex justify-around items-center h-16 lg:hidden transition-colors duration-200;
+  }
+
+  .bottom-nav-link {
+    @apply flex flex-col items-center gap-1 px-4 py-2 rounded-xl transition-all text-slate-400 dark:text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-700 dark:hover:text-slate-200;
+  }
+  .bottom-nav-link-active {
+    @apply text-mint-green-600 dark:text-mint-green-400;
+  }
 }
