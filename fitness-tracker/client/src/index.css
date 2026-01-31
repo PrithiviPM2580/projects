@@ -1,6 +1,8 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -142,6 +144,10 @@
   .theme-bg {
     @apply bg-white dark:bg-slate-950;
   }
+
+  .theme-border {
+    @apply border-slate-200 dark:border-slate-700;
+  }
   .heading-h1 {
     @apply text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold;
   }
@@ -235,5 +241,19 @@
 
   .onboarding-option-btn {
     @apply w-full p-3 pl-5 rounded-xl border text-left border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 hover:border-slate-300 dark:hover:border-slate-600 transition-all duration-200 cursor-pointer;
+  }
+
+  .sidebar-aside {
+    @apply hidden lg:flex lg:flex-col lg:w-64 xl:w-72 bg-white dark:bg-slate-900 border-r border-slate-100 dark:border-slate-800 p-6 transition-colors duration-200;
+  }
+
+  .sidebar-nav {
+    @apply flex items-center gap-3 px-4 py-2.5 border-l-3 transition-all duration-200 text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-700 dark:hover:text-slate-200 border-transparent;
+  }
+  .sidebar-nav-active {
+    @apply bg-mint-green-50 dark:bg-mint-green-900/10 text-mint-green-600  border-mint-green-500 font-medium;
+  }
+  .slldebar-theme {
+    @apply flex items-center gap-3 px-4 py-2.5 mt-6 w-full border border-slate-200 dark:border-slate-700 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer transition-all duration-200 text-slate-500 dark:text-slate-400;
   }
 }
