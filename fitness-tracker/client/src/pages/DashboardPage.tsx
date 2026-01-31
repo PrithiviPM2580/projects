@@ -1,4 +1,5 @@
 import { getMotivationalMessage } from "@/assets/seeder";
+import CaloriesChart from "@/components/CaloriesChart";
 import ProgressBar from "@/components/ProgressBar";
 import { Card } from "@/components/ui/card";
 import useAppContext from "@/hooks/useAppContext";
@@ -165,14 +166,14 @@ const DashboardPage = () => {
           </Card>
         </div>
         {user && (
-          <Card className="bg-linear-to-r from-slate-800 to-slate-700 p-4!">
+          <Card className="dark:bg-linear-to-r dark:from-slate-800 dark:to-slate-700 p-4!">
             <div className="flex items-center gap-4">
               <div className="w-12 h-12 rounded-xl bg-white/10 flex-center">
                 <TrendingUpIcon className="w-6 h-6 text-mint-green-400" />
               </div>
               <div>
                 <p className="text-slate-400 text-sm">Your Goal</p>
-                <p className="text-white font-medium capitalize">
+                <p className="theme-text font-medium capitalize">
                   {user.goal === "lose" && "🔥 Lose Weight"}
                   {user.goal === "maintain" && "⚖️ Maintain Weight"}
                   {user.goal === "gain" && "💪 Gain Weight"}
@@ -255,11 +256,47 @@ const DashboardPage = () => {
                       );
                     })()}
                   </div>
+
+                  <div className="h-2 w-full theme-bg rounded-full overflow-hidden flex">
+                    <div className="flex-1 bg-blue-400 opacity-30"></div>
+                    <div className="flex-1 bg-mint-green-400 opacity-30"></div>
+                    <div className="flex-1 bg-orange-400 opacity-30"></div>
+                    <div className="flex-1 bg-red-400 opacity-30"></div>
+                  </div>
+                  <div className="flex justify-between mt-1 text-[10px] text-slate-400">
+                    <p>18.5</p>
+                    <p>25</p>
+                    <p>30</p>
+                  </div>
                 </div>
               )}
             </div>
           </Card>
         )}
+
+        <Card className="p-4">
+          <h3 className="font-semibold theme-text">Today's Summary</h3>
+          <div className="space-y-3">
+            <div className="flex justify-between items-center py-2 border-b border-slate-100 dark:border-slate-800">
+              <p className="theme-text">Meals logged</p>
+              <p className="font-semibold theme-text">{todayFood.length}</p>
+            </div>
+            <div className="flex justify-between items-center py-2 border-b border-slate-100 dark:border-slate-800">
+              <p className="theme-text">Total Calories</p>
+              <p className="font-semibold theme-text">{totalCalories} kcal</p>
+            </div>
+            <div className="flex justify-between items-center">
+              <p className="theme-text">Active Time</p>
+              <p className="font-semibold theme-text">
+                {totalActivitiesMinutes} min
+              </p>
+            </div>
+          </div>
+        </Card>
+        <Card className="col-span-2 p-4">
+          <h3 className="font-semibold theme-text">This Week's Progress</h3>
+          <CaloriesChart />
+        </Card>
       </div>
     </section>
   );
