@@ -20,11 +20,12 @@ const AppRoute = () => {
   }
   return (
     <Routes>
-      <Route path="/" element={<LayoutPage />} />
-      <Route index element={<DashboardPage />} />
-      <Route path="food" element={<FoodLogPage />} />
-      <Route path="activity" element={<ActivityLogPage />} />
-      <Route path="profile" element={<ProfilePage />} />
+      <Route path="/" element={<LayoutPage />}>
+        <Route index element={<DashboardPage />} />
+        <Route path="food" element={<FoodLogPage />} />
+        <Route path="activity" element={<ActivityLogPage />} />
+        <Route path="profile" element={<ProfilePage />} />
+      </Route>
     </Routes>
   );
 };
