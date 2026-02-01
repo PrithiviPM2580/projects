@@ -98,6 +98,12 @@ const FoodLogPage = () => {
     {} as Record<"breakfast" | "lunch" | "dinner" | "snack", FoodEntry[]>,
   );
 
+  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setLoading(true);
+  };
+
   useEffect(() => {
     (() => {
       loadEntries();
@@ -152,7 +158,13 @@ const FoodLogPage = () => {
               <SparkleIcon className="size-5" />
               AI Food Snap
             </Button>
-            <Input type="file" accept="images/*" hidden ref={inputRef} />
+            <Input
+              onChange={handleImageChange}
+              type="file"
+              accept="images/*"
+              hidden
+              ref={inputRef}
+            />
             {loading && (
               <div className="fixed inset-0 bg-slate-100/50 dark:bg-slate-900/50 backdrop-blur flex-center z-10">
                 <Loader2Icon className="size-8 text-mint-green-600 dark:text-mint-green-400" />
