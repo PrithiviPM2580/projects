@@ -1,11 +1,27 @@
-import { quickActivitiesFoodLog } from "@/assets/seeder";
+import mockApi from "@/assets/mockApi";
+import {
+  mealColors,
+  mealIcons,
+  mealTypeOptions,
+  quickActivitiesFoodLog,
+} from "@/assets/seeder";
+import Select from "@/components/Select";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import useAppContext from "@/hooks/useAppContext";
+import { cn } from "@/lib/utils";
 import type { FoodEntry, FormData } from "@/types";
-import { Loader2Icon, PlusIcon, SparkleIcon } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import {
+  Loader2Icon,
+  PlusIcon,
+  SparkleIcon,
+  Trash2Icon,
+  UtensilsCrossedIcon,
+} from "lucide-react";
+import React, { useEffect, useRef, useState } from "react";
+import { toast } from "sonner";
 
 const FoodLogPage = () => {
   const { allFoodLogs, setAllFoodLogs } = useAppContext();
@@ -28,6 +44,36 @@ const FoodLogPage = () => {
     setEntries(todayEntries);
   };
 
+  const handleSubmit = async (e: React.SubmitEvent) => {
+    e.preventDefault();
+    const { data } = await mockApi.foodLogs.create({ data: formData });
+    setAllFoodLogs((prev) => [...prev, data]);
+    setFormData({
+      name: "",
+      calories: 0,
+      mealType: "",
+    });
+    setShowForm(false);
+  };
+
+  const handleDelete = async (documentId: string) => {
+    try {
+      const confirm = window.confirm(
+        "Are you sure you want to delete this entry?",
+      );
+      if (!confirm) return;
+      await mockApi.foodLogs.delete(documentId);
+      setAllFoodLogs((prev) =>
+        prev.filter((entry: FoodEntry) => entry.documentId !== documentId),
+      );
+    } catch (error: any) {
+      console.error("Error deleting food entry:", error);
+      toast.error(
+        error?.message || "Failed to delete food entry. Please try again.",
+      );
+    }
+  };
+
   const handleQuickAdd = (activityName: string) => {
     setFormData((prev) => ({
       ...prev,
@@ -38,6 +84,18 @@ const FoodLogPage = () => {
   const totalCalories = entries.reduce(
     (total, entry) => total + entry.calories,
     0,
+  );
+
+  const groupEntries: Record<
+    "breakfast" | "lunch" | "dinner" | "snack",
+    FoodEntry[]
+  > = entries.reduce(
+    (acc, entry) => {
+      if (!acc[entry.mealType]) acc[entry.mealType] = [];
+      acc[entry.mealType].push(entry);
+      return acc;
+    },
+    {} as Record<"breakfast" | "lunch" | "dinner" | "snack", FoodEntry[]>,
   );
 
   useEffect(() => {
@@ -100,6 +158,162 @@ const FoodLogPage = () => {
                 <Loader2Icon className="size-8 text-mint-green-600 dark:text-mint-green-400" />
               </div>
             )}
+          </div>
+        )}
+        {showForm && (
+          <Card className="p-4 theme-bg border-mint-green-200 dark:border-mint-green-700">
+            <h3 className="font-semibold theme-text">New Food Entry</h3>
+            <form className="space-y-4" onSubmit={handleSubmit}>
+              <div className="flex flex-col gap-2">
+                <Label htmlFor="name" className="theme-text">
+                  Food Name
+                </Label>
+                <Input
+                  className="py-6 input"
+                  id="name"
+                  value={formData.name}
+                  onChange={(v) =>
+                    setFormData({ ...formData, name: v.target.value })
+                  }
+                  placeholder="e.g, Grilled Chicken Salad"
+                />
+              </div>
+              <div className="flex flex-col gap-2">
+                <Label htmlFor="calories" className="theme-text">
+                  Calories
+                </Label>
+                <Input
+                  className="py-6 input"
+                  id="calories"
+                  type="number"
+                  value={formData.calories}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      calories: Number(e.target.value),
+                    })
+                  }
+                  placeholder="e.g, 350"
+                  required
+                  min={1}
+                />
+              </div>
+
+              <Select
+                label="Meal Type"
+                value={formData.mealType}
+                onChange={(value) =>
+                  setFormData({
+                    ...formData,
+                    mealType: value as string,
+                  })
+                }
+                options={mealTypeOptions}
+                placeholder="Select meal type"
+                required
+              />
+
+              <div className="flex gap-3 pt-2">
+                <Button
+                  className="flex-1 py-6!"
+                  type="button"
+                  variant="secondary"
+                  onClick={() => {
+                    setShowForm(false);
+                    setFormData({
+                      name: "",
+                      calories: 0,
+                      mealType: "",
+                    });
+                  }}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  type="submit"
+                  className="flex-1 py-6! bg-mint-green-400 dark:bg-mint-green-600 hover:bg-mint-green-500 dark:hover:bg-mint-green-400 text-white"
+                >
+                  Add Entry
+                </Button>
+              </div>
+            </form>
+          </Card>
+        )}
+
+        {entries.length === 0 ? (
+          <Card className="text-center py-12">
+            <div className="w-16 h-16 rounded-2xl theme-text flex-center mx-auto mb-4">
+              <UtensilsCrossedIcon className="size-8 theme-text" />
+            </div>
+            <h3 className="font-semibold theme-text">No food logged today</h3>
+            <p className="theme-text">
+              Start tracking your meals to stay on target
+            </p>
+          </Card>
+        ) : (
+          <div className="space-y-4">
+            {["breakfast", "lunch", "dinner", "snack"].map((mealType) => {
+              const mealTypeKey = mealType as keyof typeof groupEntries;
+              if (!groupEntries[mealTypeKey]) return null;
+
+              const MealIcon = mealIcons[mealTypeKey];
+              const mealCalories = groupEntries[mealTypeKey].reduce(
+                (sum, e) => sum + e.calories,
+                0,
+              );
+
+              return (
+                <Card className="p-4" key={mealTypeKey}>
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-3">
+                      <div
+                        className={cn(
+                          "w-10 h-10 rounded-xl flex-center",
+                          mealColors[mealTypeKey],
+                        )}
+                      >
+                        <MealIcon className="size-5" />
+                      </div>
+                      <div>
+                        <h3 className="font-semibold theme-text capitalize">
+                          {mealType}
+                        </h3>
+                        <p className="">
+                          {groupEntries[mealTypeKey].length} items
+                        </p>
+                      </div>
+                    </div>
+                    <p className="font-semibold theme-text">
+                      {mealCalories} kcal
+                    </p>
+                  </div>
+
+                  <div className="space-y-2">
+                    {groupEntries[mealTypeKey].map((entry) => (
+                      <div className="food-entry-item" key={entry.id}>
+                        <div className="flex-1">
+                          <p className="font-medium theme-text">{entry.name}</p>
+                          <p className="text-sm theme-text">{}</p>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <span className="text-sm font-medium theme-text">
+                            {entry.calories} kcal
+                          </span>
+                          <Button
+                            className="p-2 text-red-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
+                            onClick={() =>
+                              handleDelete(entry?.documentId || "")
+                            }
+                          >
+                            <Trash2Icon className="w-4 h-4" />
+                          </Button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </Card>
+              );
+            })}
           </div>
         )}
       </div>
