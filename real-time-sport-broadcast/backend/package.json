@@ -10,7 +10,7 @@
     "build": "tsc",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "db:studio": "drizzle-kit studio"
   },
   "keywords": [],
   "author": "",
