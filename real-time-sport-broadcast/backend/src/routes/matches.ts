@@ -1,14 +1,40 @@
 import { db } from "@/db/db";
 import { matches } from "@/db/schema";
 import { getMatchStatus } from "@/utils/match-status";
-import { createMatchSchema } from "@/validation/matches";
+import {
+  createMatchSchema,
+  listMatchesQuerySchema,
+} from "@/validation/matches";
+import { desc } from "drizzle-orm";
 import { Router } from "express";
 import type { Request, Response } from "express";
 
 const matchRouter: Router = Router();
 
-matchRouter.get("/", (req: Request, res: Response) => {
-  res.json({ message: "Match route works!" });
+const MAX_LIMIT = 100;
+
+matchRouter.get("/", async (req: Request, res: Response) => {
+  const parsed = listMatchesQuerySchema.safeParse(req.query);
+
+  if (!parsed.success) {
+    return res.status(400).json({
+      error: "Invalid query parameters",
+      details: JSON.stringify(parsed.error.issues),
+    });
+  }
+
+  const limit = Math.min(parsed.data.limit ?? 50, MAX_LIMIT);
+  try {
+    const data = await db
+      .select()
+      .from(matches)
+      .orderBy(desc(matches.createdAt))
+      .limit(limit);
+
+    return res.status(200).json({ data });
+  } catch (error) {
+    return res.status(500).json({ error: "Internal server error" });
+  }
 });
 
 matchRouter.post("/", async (req: Request, res: Response) => {
@@ -17,7 +43,7 @@ matchRouter.post("/", async (req: Request, res: Response) => {
   if (!parsed.success) {
     return res.status(400).json({
       error: "Invalid payload",
-      details: JSON.stringify(parsed.error),
+      details: JSON.stringify(parsed.error.issues),
     });
   }
 
