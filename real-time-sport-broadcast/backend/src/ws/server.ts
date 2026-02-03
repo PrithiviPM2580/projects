@@ -3,14 +3,14 @@ import { Server } from "node:http";
 import { CreateMatch } from "@/validation/matches";
 
 function sendJson(socket: WebSocket, payload: any) {
-  if (socket.readyState === WebSocket.OPEN) return;
+  if (socket.readyState !== WebSocket.OPEN) return;
 
   socket.send(JSON.stringify(payload));
 }
 
 function broadcast(wss: WebSocketServer, payload: any) {
   for (const client of wss.clients) {
-    if (client.readyState === WebSocket.OPEN) return;
+    if (client.readyState !== WebSocket.OPEN) continue;
 
     client.send(JSON.stringify(payload));
   }
