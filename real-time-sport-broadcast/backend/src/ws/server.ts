@@ -70,18 +70,21 @@ function handleMessage(socket: ExtendedWebSocket, data: RawData) {
     message = JSON.parse(text);
   } catch (error) {
     sendJson(socket, { type: "error", message: "Invalid JSON" });
+    return;
   }
 
-  if (message?.type === subscribe && Number.isInteger(message.matchId)) {
-    subscribe(message.matchId, socket);
-    socket.subscriptions.add(message.matchId);
+  if (message?.type === "subscribe" && Number.isInteger(message.matchId)) {
+    const matchIdStr = message.matchId.toString();
+    subscribe(matchIdStr, socket);
+    socket.subscriptions.add(matchIdStr);
     sendJson(socket, { type: "subscribed", matchId: message.matchId });
     return;
   }
 
-  if (message?.type === unsubscribe && Number.isInteger(message.matchId)) {
-    unsubscribe(message.matchId, socket);
-    socket.subscriptions.delete(message.matchId);
+  if (message?.type === "unsubscribe" && Number.isInteger(message.matchId)) {
+    const matchIdStr = message.matchId.toString();
+    unsubscribe(matchIdStr, socket);
+    socket.subscriptions.delete(matchIdStr);
     sendJson(socket, { type: "unsubscribed", matchId: message.matchId });
     return;
   }
