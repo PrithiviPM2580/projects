@@ -1,5 +1,6 @@
 import express, { Request, Response } from "express";
 import http from "node:http";
+import cors from "cors";
 import matchRouter from "./routes/matches";
 import commentryRouter from "./routes/commentry";
 import { setupWebSocketServer } from "./ws/server";
@@ -16,6 +17,14 @@ app.all("/api/auth/{*splat}", toNodeHandler(auth));
 
 // JSON middleware
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(
+  cors({
+    origin: "*",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  }),
+);
 
 // Root GET route
 app.get("/", (req: Request, res: Response) => {
