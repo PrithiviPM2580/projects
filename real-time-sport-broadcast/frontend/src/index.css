@@ -57,6 +57,11 @@
 
 :root {
   --radius: 0.625rem;
+  --input-focus: #2d8cf0;
+  --font-color: #1a1a1a;
+  --font-color-sub: #e5e5e5;
+  --bg-color: #ffffff;
+  --main-color: #1a1a1a;
   --background: oklch(1 0 0);
   --foreground: oklch(0.129 0.042 264.695);
   --card: oklch(1 0 0);
@@ -91,6 +96,11 @@
 }
 
 .dark {
+  --input-focus: #2d8cf0;
+  --font-color: #fefefe;
+  --font-color-sub: #1a1a1a;
+  --bg-color: #111;
+  --main-color: #fefefe;
   --background: oklch(0.129 0.042 264.695);
   --foreground: oklch(0.984 0.003 247.858);
   --card: oklch(0.208 0.042 265.755);
@@ -137,86 +147,54 @@
   .flex-center {
     @apply flex justify-center items-center;
   }
+  .theme-text {
+    @apply text-black dark:text-white;
+  }
+  .theme-bg {
+    @apply bg-white dark:bg-black;
+  }
 }
 
 @layer utilities {
   .wrapper {
-    --input-focus: #fbff52;
-    --font-color: #323232;
-    --font-color-sub: #666;
-    --bg-color: #fff;
-    --bg-color-alt: #666;
-    --main-color: #323232; /* display: flex; */ /* flex-direction: column; */ /* align-items: center; */
-    @apply w-screen h-screen flex justify-center items-center;
+    @apply w-full h-svh flex items-center justify-center bg-(--font-color-sub);
   }
-  /* switch card */
-  .switch {
-    @apply translate-y-[-250px] relative flex flex-col justify-center items-center gap-[30px] w-[50px] h-5;
+  .auth-card {
+    @apply w-86 h-112 md:w-102 md:h-112 px-4 bg-(--font-color-sub) dark:bg-(--bg-color) flex flex-col items-start justify-center gap-10 border-(--main-color) shadow-[4px_4px_var(--main-color)]  rounded-[5px] border-2 border-solid;
   }
-  .card-side::before {
-    @apply absolute content-['Log_in'] left-[-70px] w-[100px] underline text-[color:var(--font-color)] font-semibold top-0;
+  .auth-text {
+    @apply text-2xl md:text-3xl text-center font-semibold;
   }
-  .card-side::after {
-    @apply absolute content-['Sign_up'] w-[100px] no-underline text-[color:var(--font-color)] font-semibold left-[70px] top-0;
-  }
-  .toggle {
-    @apply opacity-0 w-0 h-0;
-  }
-  .slider {
-    @apply box-border border-[color:var(--main-color)] shadow-[4px_4px_var(--main-color)] absolute cursor-pointer bg-[color:var(--bg-colorcolor)] transition-[0.3s] rounded-[5px] border-2 border-solid inset-0 before:box-border before:absolute before:content-[""] before:h-5 before:w-5 before:border-[color:var(--main-color)] before:bg-[color:var(--bg-color)] before:shadow-[0_3px_0_var(--main-color)] before:transition-[0.3s] before:rounded-[5px] before:border-2 before:border-solid before:-left-0.5 before:bottom-0.5;
-  }
-  .toggle:checked + .slider {
-    @apply bg-[color:var(--input-focus)] before:translate-x-[30px];
-  }
-  .toggle:checked ~ .card-side:before {
-    @apply no-underline;
-  }
-  .toggle:checked ~ .card-side:after {
-    @apply underline;
-  }
-
-  /* card */
-  .flip-card__inner {
-    @apply w-[400px] h-[500px] relative bg-transparent text-center transition-transform duration-[0.8s];
-    perspective: 1000px; /* width: 100%;
-    height: 100%; */
-    transform-style: preserve-3d;
-  }
-  .toggle:checked ~ .flip-card__inner {
-    transform: rotateY(180deg);
-  }
-  .toggle:checked ~ .flip-card__front {
-    @apply shadow-none;
-  }
-  .flip-card__front,
-  .flip-card__back {
-    @apply absolute flex flex-col justify-center gap-5 border-[color:var(--main-color)] shadow-[4px_4px_var(--main-color)] p-5 rounded-[5px] border-2 border-solid;
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-    background: lightgrey;
-  }
-  .flip-card__back {
-    @apply w-[400px] h-[500px];
-    transform: rotateY(180deg);
-  }
-  .flip-card__form {
-    @apply flex flex-col items-center gap-5;
+  .form {
+    @apply w-full h-fit flex flex-col gap-2;
   }
   .title {
-    @apply text-[25px] font-black text-center text-[color:var(--main-color)] mx-0 my-5;
+    @apply text-(--font-color) font-black text-xl mb-6.25;
   }
-  .flip-card__input {
-    @apply w-[350px] h-14 border-[color:var(--main-color)] bg-[color:var(--bg-color)] shadow-[4px_4px_var(--main-color)] text-[15px] font-semibold text-[color:var(--font-color)] px-2.5 py-[5px] rounded-[5px] border-2 border-solid focus:border-[color:var(--input-focus)] focus:border-2 focus:border-solid;
+  .title span {
+    @apply text-(--font-color-sub) font-semibold text-[17px];
+  }
+  .input {
+    @apply w-full h-10 border-(--main-color) bg-(--bg-color) shadow-[4px_4px_var(--main-color)] text-[15px] font-semibold text-(--font-color) px-2.5 py-1.25 rounded-[5px] border-2 border-solid focus:border-(--input-focus) focus:border-2 focus:border-solid;
     outline: none;
   }
-  .flip-card__input::placeholder {
-    @apply text-[color:var(--font-color-sub)] opacity-80;
+  .input::placeholder {
+    @apply text-white dark:text-black opacity-80;
   }
-  .flip-card__btn:active,
+  .login-with {
+    @apply flex gap-5;
+  }
+  .button-log {
+    @apply cursor-pointer w-10 h-10 border-(--main-color) bg-(--bg-color) shadow-[4px_4px_var(--main-color)] text-(--font-color) text-[25px] flex justify-center items-center rounded-[100%] border-2 border-solid;
+  }
+  .icon {
+    @apply w-6 h-6 fill-(--main-color);
+  }
+  .button-log:active,
   .button-confirm:active {
-    @apply shadow-[0px_0px_var(--main-color)] translate-x-[3px] translate-y-[3px];
+    @apply shadow-[0px_0px_var(--main-color)] translate-x-0.75 translate-y-0.75;
   }
-  .flip-card__btn {
-    @apply w-[120px] h-10 border-[color:var(--main-color)] bg-[color:var(--bg-color)] shadow-[4px_4px_var(--main-color)] text-[17px] font-semibold text-[color:var(--font-color)] cursor-pointer mx-0 my-5 rounded-[5px] border-2 border-solid;
+  .button-confirm {
+    @apply w-30 h-10 border-(--main-color) bg-(--bg-color) shadow-[4px_4px_var(--main-color)] text-[17px] font-semibold text-(--font-color) cursor-pointer mt-12.5 mb-0 mx-auto rounded-[5px] border-2 border-solid;
   }
 }
