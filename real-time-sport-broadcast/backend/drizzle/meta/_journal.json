@@ -8,6 +8,13 @@
       "when": 1770136011887,
       "tag": "0000_confused_solo",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1770195904634,
+      "tag": "0001_huge_firestar",
+      "breakpoints": true
     }
   ]
 }
