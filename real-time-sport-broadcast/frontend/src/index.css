@@ -147,6 +147,9 @@
   .flex-center {
     @apply flex justify-center items-center;
   }
+  .flex-between {
+    @apply flex justify-between items-center;
+  }
   .theme-text {
     @apply text-(--font-color);
   }
@@ -196,5 +199,14 @@
   }
   .button-confirm {
     @apply w-30 h-10 border-(--main-color) bg-(--bg-color) shadow-[4px_4px_var(--main-color)] text-[17px] font-semibold text-(--font-color) cursor-pointer mt-12.5 mb-0 mx-auto rounded-[5px] border-2 border-solid;
+  }
+  .header {
+    @apply w-full h-fit p-6 bg-sport-400 dark:bg-sport-600 border-(--main-color) shadow-[4px_4px_var(--main-color)]  rounded-4xl border-2 border-solid;
+  }
+  .main {
+    @apply w-full min-h-svh px-20 py-10;
+  }
+  .btn {
+    @apply text-(--font-color) bg-(--bg-color) border-(--main-color)  shadow-[4px_4px_var(--main-color)] rounded-sm border-2 border-solid outline-none hover:bg-sport-50;
   }
 }
