@@ -74,15 +74,22 @@ commentryRouter.post("/", async (req: Request, res: Response) => {
   }
 
   try {
+    const matchId = paramsValidation.data.id;
     const { minute, ...rest } = bodyResult.data;
     const [result] = await db
       .insert(commentary)
       .values({
-        matchId: paramsValidation.data.id,
+        matchId,
         minute,
         ...rest,
       })
       .returning();
+
+    // Broadcast commentary to WebSocket subscribers
+    if (req.app.locals.broadcastCommentary) {
+      req.app.locals.broadcastCommentary(matchId, result);
+    }
+
     return res.status(201).json({ data: result });
   } catch (error) {
     return res.status(500).json({ error: "Internal server error" });
