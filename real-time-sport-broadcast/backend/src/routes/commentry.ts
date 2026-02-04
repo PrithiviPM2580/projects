@@ -38,12 +38,16 @@ commentryRouter.get("/", async (req: Request, res: Response) => {
 
     const safeLimit = Math.min(limit, MAX_LIMIT);
 
-    const data = await db
+    const [data] = await db
       .select()
       .from(commentary)
       .where(eq(commentary.matchId, matchId))
       .orderBy(desc(commentary.createdAt))
       .limit(safeLimit);
+
+    if (res.locals.broadcastCommentary) {
+      res.locals.broadcastCommentary(data.matchId, data);
+    }
 
     return res.status(200).json({ data });
   } catch (error) {
