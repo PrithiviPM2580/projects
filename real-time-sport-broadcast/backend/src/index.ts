@@ -19,7 +19,7 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 app.use("/matches", matchRouter);
-app.use("/commentry", commentryRouter);
+app.use("/matches/:id/commentary", commentryRouter);
 
 const { broadcastMatchCreated } = setupWebSocketServer(server);
 app.locals.broadcastMatchCreated = broadcastMatchCreated;
