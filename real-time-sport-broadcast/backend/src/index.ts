@@ -3,12 +3,16 @@ import http from "node:http";
 import matchRouter from "./routes/matches";
 import commentryRouter from "./routes/commentry";
 import { setupWebSocketServer } from "./ws/server";
+import { toNodeHandler } from "better-auth/node";
+import { auth } from "./lib/auth";
 
 const PORT = Number(process.env.PORT) || 3000;
 const HOST = process.env.HOST || "0.0.0.0";
 
 const app = express();
 const server = http.createServer(app);
+
+app.all("/api/auth/*", toNodeHandler(auth));
 
 // JSON middleware
 app.use(express.json());
