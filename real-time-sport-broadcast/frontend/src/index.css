@@ -148,10 +148,10 @@
     @apply flex justify-center items-center;
   }
   .theme-text {
-    @apply text-black dark:text-white;
+    @apply text-(--font-color);
   }
   .theme-bg {
-    @apply bg-white dark:bg-black;
+    @apply bg-(--bg-color);
   }
 }
 
@@ -175,11 +175,11 @@
     @apply text-(--font-color-sub) font-semibold text-[17px];
   }
   .input {
-    @apply w-full h-10 border-(--main-color) bg-(--bg-color) shadow-[4px_4px_var(--main-color)] text-[15px] font-semibold text-(--font-color) px-2.5 py-1.25 rounded-[5px] border-2 border-solid focus:border-(--input-focus) focus:border-2 focus:border-solid;
+    @apply w-full h-10 border-(--main-color) bg-(--bg-color) shadow-[4px_4px_var(--main-color)] text-[15px] font-semibold  px-2.5 py-1.25 rounded-[5px] border-2 border-solid focus:border-(--input-focus) focus:border-2 focus:border-solid;
     outline: none;
   }
   .input::placeholder {
-    @apply text-white dark:text-black opacity-80;
+    @apply opacity-80;
   }
   .login-with {
     @apply flex gap-5;
