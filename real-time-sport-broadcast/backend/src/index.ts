@@ -12,7 +12,7 @@ const HOST = process.env.HOST || "0.0.0.0";
 const app = express();
 const server = http.createServer(app);
 
-app.all("/api/auth/*", toNodeHandler(auth));
+app.all("/api/auth/{*splat}", toNodeHandler(auth));
 
 // JSON middleware
 app.use(express.json());
