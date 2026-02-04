@@ -4,12 +4,14 @@ import { Button } from "./ui/button";
 import useSocket from "@/hooks/useSocket";
 import { useTheme } from "./ThemeProvider";
 import { MoonIcon, SunIcon } from "lucide-react";
+import Matches from "./Matches";
+import Commentary from "./Commentary";
 
 const Home = () => {
   const { isConnected, connect, disconnect } = useSocket();
   const { theme, setTheme } = useTheme();
   return (
-    <section>
+    <section className="flex flex-col gap-10">
       <Header>
         <div className="w-full flex-between">
           <div className="fle flex-col gap-2">
@@ -38,6 +40,10 @@ const Home = () => {
           </div>
         </div>
       </Header>
+      <div className="flex gap-6">
+        <Matches />
+        <Commentary />
+      </div>
     </section>
   );
 };
