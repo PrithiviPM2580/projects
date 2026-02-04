@@ -2,6 +2,10 @@ import { WebSocket, WebSocketServer } from "ws";
 import { Server } from "node:http";
 import { CreateMatch } from "@/validation/matches";
 
+interface ExtendedWebSocket extends WebSocket {
+  isAlive?: boolean;
+}
+
 function sendJson(socket: WebSocket, payload: any) {
   if (socket.readyState !== WebSocket.OPEN) return;
 
@@ -23,10 +27,26 @@ export function setupWebSocketServer(server: Server) {
     maxPayload: 1024 * 1024,
   });
 
-  wss.on("connection", (socket) => {
-    sendJson(socket, { type: "welcome" });
+  wss.on("connection", (socket: ExtendedWebSocket) => {
+    socket.isAlive = true;
+    socket.on("pong", () => {
+      socket.isAlive = true;
+      sendJson(socket, { type: "welcome" });
+      socket.on("error", console.error);
+    });
 
-    socket.on("error", console.error);
+    const interval = setInterval(() => {
+      wss.clients.forEach((ws: any) => {
+        if (ws.isAlive === false) return ws.terminate();
+
+        ws.isAlive = false;
+        ws.ping();
+      });
+    }, 30000);
+
+    socket.on("close", () => {
+      clearInterval(interval);
+    });
   });
 
   function broadcastMatchCreated(match: CreateMatch) {
