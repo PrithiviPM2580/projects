@@ -1,6 +1,7 @@
 import AuthPage from "@/pages/AuthPage";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { authClient } from "@/lib/auth-client";
+import HomePage from "@/pages/HomePage";
 
 const AppRoute = () => {
   const { data: session, isPending } = authClient.useSession();
@@ -16,7 +17,7 @@ const AppRoute = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<div>App Route</div>} />
+        <Route path="/" element={<HomePage />} />
       </Routes>
     </BrowserRouter>
   );
