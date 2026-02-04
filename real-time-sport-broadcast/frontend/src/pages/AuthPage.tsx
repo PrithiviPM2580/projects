@@ -18,14 +18,18 @@ import { z } from "zod";
 import { toast } from "sonner";
 import { logInUser, signUpUser } from "@/lib/auth-functions";
 import { cn } from "@/lib/utils";
+import { Spinner } from "@/components/ui/spinner";
 
 const loginSchema = z.object({
   email: z.email("Invalid email address"),
   password: z.string().min(6, "Password must be at least 6 characters"),
+  name: z.string().optional(),
 });
 
-const signupSchema = loginSchema.extend({
-  userName: z.string().min(3, "Username must be at least 3 characters"),
+const signupSchema = z.object({
+  name: z.string().min(3, "Username must be at least 3 characters"),
+  email: z.email("Invalid email address"),
+  password: z.string().min(6, "Password must be at least 6 characters"),
 });
 
 type FormData = z.infer<typeof loginSchema> & { name?: string };
@@ -45,9 +49,11 @@ const AuthPage = () => {
   });
 
   async function onSubmit(data: FormData) {
+    console.log("Form submitted with data:", data);
     setIsSubmitting(true);
     try {
       if (auth === "login") {
+        console.log("Attempting login...");
         await logInUser(
           {
             email: data.email,
@@ -56,6 +62,7 @@ const AuthPage = () => {
           {
             onLoading: setLoading,
             onToast: (message, type) => {
+              console.log("Toast:", message, type);
               if (type === "success") {
                 toast.success(message);
               } else {
@@ -65,6 +72,7 @@ const AuthPage = () => {
           },
         );
       } else {
+        console.log("Attempting signup...");
         if (!data.name) return;
         await signUpUser(
           {
@@ -75,6 +83,7 @@ const AuthPage = () => {
           {
             onLoading: setLoading,
             onToast: (message, type) => {
+              console.log("Toast:", message, type);
               if (type === "success") {
                 toast.success(message);
               } else {
@@ -90,6 +99,10 @@ const AuthPage = () => {
     } finally {
       setIsSubmitting(false);
     }
+  }
+
+  if (loading) {
+    return <Spinner />;
   }
 
   return (
@@ -111,9 +124,7 @@ const AuthPage = () => {
           <form
             className="form"
             id="form-rhf-demo"
-            onSubmit={form.handleSubmit((data) => {
-              onSubmit(data);
-            })}
+            onSubmit={form.handleSubmit(onSubmit)}
           >
             <FieldGroup>
               {auth === "signup" && (
@@ -190,7 +201,8 @@ const AuthPage = () => {
             <Button
               type="submit"
               className="button-confirm"
-              disabled={isSubmitting}
+              disabled={isSubmitting || loading}
+              form="form-rhf-demo"
             >
               {isSubmitting
                 ? "Submitting..."
