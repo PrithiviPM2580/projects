@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Input } from "@/components/ui/input";
+import { useAuth } from "@/hooks/useAuth";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
@@ -58,6 +59,7 @@ const Auth = ({ type }: { type: Auth }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
+  const { setUser } = useAuth();
 
   const form = useForm<FormData>({
     resolver: zodResolver(type === "login" ? loginSchema : signupSchema),
@@ -75,10 +77,11 @@ const Auth = ({ type }: { type: Auth }) => {
     setIsSubmitting(true);
     try {
       if (type === "login") {
-        await apiClient.post("/auth/login", {
+        const response = await apiClient.post("/auth/login", {
           email: data.email,
           password: data.password,
         });
+        setUser(response.data);
         toast.success("Login successful");
         navigate("/");
       } else {
