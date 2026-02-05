@@ -19,13 +19,13 @@ const Cards = () => {
           <CardContent className="flex flex-col gap-2">
             <div className="flex-between">
               <h1 className="text-xl font-bold theme-text">{match.homeTeam}</h1>
-              <span className="theme-text border-2 border-black w-14 h-14 flex-center bg-slate-100 font-bold text-xl rounded-xl">
+              <span className="text-black border-2 border-black w-14 h-14 flex-center bg-slate-100 font-bold text-xl rounded-xl">
                 {match.homeScore}
               </span>
             </div>
             <div className="flex-between">
               <h1 className="text-xl font-bold theme-text">{match.awayTeam}</h1>
-              <span className="theme-text border-2 border-black w-14 h-14 flex-center bg-slate-100 font-bold text-xl rounded-xl">
+              <span className="text-black border-2 border-black w-14 h-14 flex-center bg-slate-100 font-bold text-xl rounded-xl">
                 {match.awayScore}
               </span>
             </div>
@@ -39,7 +39,7 @@ const Cards = () => {
                 hour12: true,
               })}
             </p>
-            <Button className="btn bg-sport-300! font-semibold">
+            <Button className="btn text-white dark:text-black bg-sport-300! font-semibold">
               Watch Live
             </Button>
           </CardFooter>
