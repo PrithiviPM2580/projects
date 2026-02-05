@@ -1,4 +1,4 @@
-import Cards from "./Cards";
+import Cards from "./MatchesCard";
 import Header from "./Header";
 
 const Matches = () => {
