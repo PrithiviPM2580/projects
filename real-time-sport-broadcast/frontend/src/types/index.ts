@@ -24,3 +24,14 @@ export type ThemeProviderState = {
 };
 export type ToastType = "success" | "error";
 export type Auth = "login" | "signup";
+
+export interface Matches {
+  id: number;
+  sport: string;
+  homeTeam: string;
+  awayTeam: string;
+  startTime: string;
+  endTime: string;
+  homeScore: number;
+  awayScore: number;
+}
