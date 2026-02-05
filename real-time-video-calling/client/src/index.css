@@ -121,3 +121,143 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer components {
+  .flex-center {
+    @apply flex items-center justify-center;
+  }
+
+  .theme-text {
+    @apply text-slate-950 dark:text-white;
+  }
+  .theme-bg {
+    @apply bg-white dark:bg-slate-950;
+  }
+
+  .theme-border {
+    @apply border-slate-200 dark:border-slate-700;
+  }
+  .heading-h1 {
+    @apply text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold;
+  }
+  .heading-h2 {
+    @apply text-xl sm:text-2xl md:text-3xl lg:text-4xl font-semibold;
+  }
+  .heading-h3 {
+    @apply text-base sm:text-lg md:text-xl lg:text-2xl font-semibold;
+  }
+}
+
+@layer utilities {
+  .page-container {
+    @apply min-h-screen bg-slate-50 dark:bg-slate-950 pb-24 transition-colors duration-200;
+  }
+
+  .page-header {
+    @apply bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800 p-6 pt-12 transition-colors duration-200;
+  }
+
+  .layout-container {
+    @apply min-h-screen lg:max-h-screen lg:flex bg-white dark:bg-slate-950 transition-colors duration-200;
+  }
+
+  .page-content-grid {
+    @apply p-4 lg:p-6 space-y-4 lg:grid lg:grid-cols-2 lg:gap-6;
+  }
+
+  /* Login Page */
+  .login-page-container {
+    @apply flex items-center justify-center w-full h-screen px-4 bg-white dark:bg-slate-950 transition-colors duration-200;
+  }
+
+  .login-form {
+    @apply flex w-full flex-col;
+  }
+
+  .login-form-container {
+    @apply w-full max-w-md rounded-2xl border border-white/30 dark:border-white/10 bg-white/50 dark:bg-slate-900/40 shadow-xl backdrop-blur-xl p-6 sm:p-8 transition-colors duration-200;
+  }
+
+  .login-input {
+    @apply text-base pl-14 py-4 rounded-md ring ring-gray-200 dark:ring-slate-700 bg-white dark:bg-slate-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-purple-600 dark:focus:ring-purple-500 outline-none w-full transition-all duration-200;
+  }
+
+  .login-button {
+    @apply mt-6 py-6 w-full rounded-md bg-purple-600 text-white transition hover:bg-purple-700 disabled:opacity-60 text-sm;
+  }
+
+  /* Dashboard Page */
+  .dashboard-header {
+    @apply bg-linear-to-br from-emerald-500 to-emerald-600 text-white p-6 pt-12 pb-20 rounded-b-3xl;
+  }
+
+  .dashboard-grid {
+    @apply px-4 -mt-10 space-y-4 lg:grid lg:grid-cols-2 lg:gap-4 lg:px-6 lg:max-w-4xl lg:mx-auto;
+  }
+
+  .dashboard-card-grid {
+    @apply grid grid-cols-2 gap-4 lg:col-span-2;
+  }
+
+  /* Profile Page */
+  .profile-content {
+    @apply p-4 lg:p-6 space-y-4 lg:grid grid-cols-2 gap-6;
+  }
+
+  .profile-info-row {
+    @apply flex items-center gap-4 p-3 bg-slate-50 dark:bg-slate-800 rounded-lg transition-colors duration-200;
+  }
+
+  /* Food Log Page */
+  .food-entry-item {
+    @apply flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-800 rounded-xl transition-colors duration-200;
+  }
+
+  /* Activity Log Page */
+  .activity-entry-item {
+    @apply flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-800 rounded-xl transition-colors duration-200;
+  }
+
+  /* Onboarding Page */
+  .onboarding-container {
+    @apply min-h-screen bg-linear-to-b from-emerald-50 to-white dark:from-slate-900 dark:to-slate-950 flex flex-col transition-colors duration-200;
+  }
+
+  .onboarding-wrapper {
+    @apply w-full lg:max-w-5xl mx-auto;
+  }
+
+  .onboarding-option-btn {
+    @apply w-full p-3 pl-5 rounded-xl border text-left border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 hover:border-slate-300 dark:hover:border-slate-600 transition-all duration-200 cursor-pointer;
+  }
+
+  .sidebar-aside {
+    @apply hidden lg:flex lg:flex-col lg:w-64 xl:w-72 bg-white dark:bg-slate-900 border-r border-slate-100 dark:border-slate-800 p-6 transition-colors duration-200;
+  }
+
+  .sidebar-nav {
+    @apply flex items-center gap-3 px-4 py-2.5 border-l-3 transition-all duration-200 text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-700 dark:hover:text-slate-200 border-transparent;
+  }
+  .sidebar-nav-active {
+    @apply bg-purple-50 dark:bg-purple-900/10 text-purple-600  border-purple-500 font-medium;
+  }
+  .slldebar-theme {
+    @apply flex items-center gap-3 px-4 py-2.5 mt-6 w-full border border-slate-200 dark:border-slate-700 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer transition-all duration-200 text-slate-500 dark:text-slate-400;
+  }
+  .bottom-nav {
+    @apply fixed bottom-0 left-0 right-0 bg-white dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800 flex justify-around items-center h-16 lg:hidden transition-colors duration-200;
+  }
+
+  .bottom-nav-link {
+    @apply flex flex-col items-center gap-1 px-4 py-2 rounded-xl transition-all text-slate-400 dark:text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-700 dark:hover:text-slate-200;
+  }
+  .bottom-nav-link-active {
+    @apply text-purple-600 dark:text-purple-400;
+  }
+  .food-log-btn {
+    @apply px-4 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-xl text-sm font-medium text-slate-700 dark:text-slate-200 transition-colors;
+  }
+  .input {
+    @apply ring ring-gray-200 dark:ring-slate-700 bg-white dark:bg-slate-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-purple-600 dark:focus:ring-purple-500 outline-none transition-all duration-200;
+  }
+}
