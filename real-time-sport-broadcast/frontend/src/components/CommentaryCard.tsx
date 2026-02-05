@@ -1,8 +1,44 @@
-import { COMMENTARY } from "@/constants";
+import { getCommentary } from "@/lib/commentry-function";
+import type { Commentary } from "@/types";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
+import { Spinner } from "./ui/spinner";
+
 const CommentaryCard = () => {
+  const [commentary, setCommentary] = useState<Commentary[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchCommentary = async () => {
+      try {
+        setLoading(true);
+        const data = await getCommentary("1");
+        setCommentary(data);
+        toast.success("Commentary loaded successfully!");
+      } catch (err) {
+        const errorMessage =
+          err instanceof Error ? err.message : "Failed to fetch commentary";
+        setError(errorMessage);
+        toast.error(errorMessage);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCommentary();
+  }, []);
+
+  if (loading) {
+    return <Spinner />;
+  }
+
+  if (error) {
+    return <div className="text-center py-8 text-red-500">{error}</div>;
+  }
   return (
     <div className="flex flex-col gap-10 m-4">
-      {COMMENTARY.map((commentary, index) => (
+      {commentary.map((commentary, index) => (
         <div className="flex flex-row gap-3" key={index}>
           <div className="flex items-center flex-col gap-2 ">
             <div className="w-2 h-2 rounded-full bg-sport-600" />
