@@ -4,6 +4,7 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import connectToDatabase from "./db/db";
 import authRouter from "./routes/auth.route";
+import userRouter from "./routes/user.route";
 
 const app: Express = express();
 const PORT = process.env.PORT || 5000;
@@ -23,7 +24,8 @@ app.get("/", (req, res) => {
   res.send("Real-Time Video Calling Server is running!");
 });
 
-app.use("/auth", authRouter);
+app.use("/api/auth", authRouter);
+app.use("/api/users", userRouter);
 
 (async () => {
   try {
