@@ -8,7 +8,7 @@ const userRouter: Router = Router();
 
 userRouter.get("/", getAllUsersController);
 
-userRouter.get("/me");
+userRouter.get("/me", getCurrentUserController);
 
 // userRouter.get("/search")
 // userRouter.get("/:id");
