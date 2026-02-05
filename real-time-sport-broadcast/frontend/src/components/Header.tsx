@@ -1,7 +1,11 @@
 import type React from "react";
 
-const Header = ({ children }: { children: React.ReactNode }) => {
-  return <div className="header">{children}</div>;
+type HeaderProps = React.PropsWithChildren<
+  React.HTMLAttributes<HTMLDivElement>
+>;
+
+const Header = ({ children, ...props }: HeaderProps) => {
+  return <div {...props}>{children}</div>;
 };
 
 export default Header;
