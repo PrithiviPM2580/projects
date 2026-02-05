@@ -204,9 +204,12 @@
     @apply w-full h-fit p-6 bg-sport-400 dark:bg-sport-600 border-(--main-color) shadow-[4px_4px_var(--main-color)]  rounded-4xl border-2 border-solid;
   }
   .main {
-    @apply w-full min-h-svh px-20 py-10;
+    @apply w-full min-h-svh px-4 py-6 md:px-12 md:py-6 lg:px-20 lg:py-10;
   }
   .btn {
     @apply text-(--font-color) bg-(--bg-color) border-(--main-color)  shadow-[4px_4px_var(--main-color)] rounded-sm border-2 border-solid outline-none hover:bg-sport-50;
+  }
+  .card {
+    @apply bg-card border-(--main-color) shadow-[4px_4px_var(--main-color)] rounded-[20px] border-2 border-solid;
   }
 }
