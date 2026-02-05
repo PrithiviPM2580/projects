@@ -1,4 +1,4 @@
-import type { Matches } from "@/types";
+import type { Commentary, Matches } from "@/types";
 
 export const MATCHES: Matches[] = [
   {
@@ -60,5 +60,74 @@ export const MATCHES: Matches[] = [
     endTime: "2026-02-05T13:40:00",
     homeScore: 24,
     awayScore: 22,
+  },
+];
+
+export const COMMENTARY: Commentary[] = [
+  {
+    matchId: 3,
+    minute: 14,
+    sequence: 654,
+    period: "1st innings",
+    eventType: "boundary",
+    team: "India",
+    actor: "Rohit Sharma",
+    message: "Rohit Sharma cuts it past point for a FOUR.",
+    tags: ["four", "boundary"],
+  },
+  {
+    matchId: 3,
+    minute: 16,
+    sequence: 655,
+    period: "1st innings",
+    eventType: "six",
+    team: "India",
+    actor: "Virat Kohli",
+    message: "Massive hit! Kohli launches it over long-on for SIX.",
+    tags: ["six", "maximum"],
+  },
+  {
+    matchId: 3,
+    minute: 18,
+    sequence: 656,
+    period: "1st innings",
+    eventType: "wicket",
+    team: "India",
+    actor: "Jasprit Bumrah",
+    message: "WICKET! Bumrah removes the batsman with a sharp bouncer.",
+    tags: ["wicket", "out"],
+  },
+  {
+    matchId: 3,
+    minute: 20,
+    sequence: 657,
+    period: "1st innings",
+    eventType: "dot",
+    team: "India",
+    actor: "KL Rahul",
+    message: "Good length delivery, defended back to the bowler.",
+    tags: ["dot", "no-run"],
+  },
+  {
+    matchId: 3,
+    minute: 22,
+    sequence: 658,
+    period: "1st innings",
+    eventType: "run",
+    team: "India",
+    actor: "Shubman Gill",
+    message: "Quick running between the wickets, they take TWO runs.",
+    tags: ["run", "two"],
+  },
+  {
+    matchId: 3,
+    minute: 25,
+    sequence: 659,
+    period: "1st innings",
+    eventType: "drinks",
+    team: "India",
+    actor: "Umpire",
+    message: "Drinks break called as players head off the field.",
+    tags: ["break", "drinks"],
   },
 ];
