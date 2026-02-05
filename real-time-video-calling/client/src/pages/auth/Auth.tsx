@@ -84,7 +84,6 @@ const Auth = ({ type }: { type: Auth }) => {
           email: data.email,
           password: data.password,
         });
-        console.log("Login response:", response.data);
 
         if (response.data) {
           updateUser(response.data);
@@ -94,7 +93,6 @@ const Auth = ({ type }: { type: Auth }) => {
           toast.error("Login failed: No user data received");
         }
       } else {
-        console.log("Signup data:", data);
         await apiClient.post("/auth/signup", {
           fullName: data.fullName,
           userName: data.userName,
