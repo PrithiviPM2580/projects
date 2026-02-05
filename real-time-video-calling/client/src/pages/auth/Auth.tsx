@@ -42,6 +42,9 @@ const signupSchema = loginSchema
     confirmPassword: z
       .string()
       .min(6, "Confirm password must be at least 6 characters"),
+    gender: z.enum(["Male", "Female"], {
+      message: "Please select a gender",
+    }),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords do not match",
@@ -59,7 +62,7 @@ const Auth = ({ type }: { type: Auth }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
-  const { setUser } = useAuth();
+  const { updateUser } = useAuth();
 
   const form = useForm<FormData>({
     resolver: zodResolver(type === "login" ? loginSchema : signupSchema),
@@ -81,10 +84,17 @@ const Auth = ({ type }: { type: Auth }) => {
           email: data.email,
           password: data.password,
         });
-        setUser(response.data);
-        toast.success("Login successful");
-        navigate("/");
+        console.log("Login response:", response.data);
+
+        if (response.data) {
+          updateUser(response.data);
+          toast.success("Login successful");
+          navigate("/", { replace: true });
+        } else {
+          toast.error("Login failed: No user data received");
+        }
       } else {
+        console.log("Signup data:", data);
         await apiClient.post("/auth/signup", {
           fullName: data.fullName,
           userName: data.userName,
@@ -93,11 +103,14 @@ const Auth = ({ type }: { type: Auth }) => {
           gender: data.gender,
         });
         toast.success("Registration successful, please login");
-        navigate("/login");
+        navigate("/login", { replace: true });
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error("Submission error:", error);
-      toast.error("An error occurred during submission. Please try again.");
+      const errorMessage =
+        error?.response?.data?.message ||
+        "An error occurred during submission. Please try again.";
+      toast.error(errorMessage);
     } finally {
       setIsSubmitting(false);
     }
@@ -117,9 +130,7 @@ const Auth = ({ type }: { type: Auth }) => {
         <CardContent className="w-full">
           <form
             id="form-rhf-demo"
-            onSubmit={form.handleSubmit((data) => {
-              onSubmit(data);
-            })}
+            onSubmit={form.handleSubmit(onSubmit)}
             className="login-form"
           >
             <FieldGroup className="gap-4">
