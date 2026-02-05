@@ -1,11 +1,47 @@
-import { MATCHES } from "@/constants";
+import { useEffect, useState } from "react";
+import { getMatches } from "@/lib/match-fuctions";
 import { Card, CardContent, CardFooter, CardHeader } from "./ui/card";
 import { Button } from "./ui/button";
+import { toast } from "sonner";
+import type { Matches } from "@/types";
+import { Spinner } from "./ui/spinner";
 
 const Cards = () => {
+  const [matches, setMatches] = useState<Matches[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchMatches = async () => {
+      try {
+        setLoading(true);
+        const data = await getMatches();
+        setMatches(data);
+        toast.success("Matches loaded successfully!");
+      } catch (err) {
+        const errorMessage =
+          err instanceof Error ? err.message : "Failed to fetch matches";
+        setError(errorMessage);
+        toast.error(errorMessage);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchMatches();
+  }, []);
+
+  if (loading) {
+    return <Spinner />;
+  }
+
+  if (error) {
+    return <div className="text-center py-8 text-red-500">{error}</div>;
+  }
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-      {MATCHES.map((match) => (
+      {matches.map((match) => (
         <Card key={match.id} className="card">
           <CardHeader className="flex items-center justify-between">
             <p className="px-3 py-1.2 rounded-xl border-2 border-slate-900 text-slate-600">
