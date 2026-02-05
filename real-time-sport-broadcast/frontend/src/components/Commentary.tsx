@@ -1,5 +1,6 @@
 import { Video } from "lucide-react";
 import Header from "./Header";
+import CommentaryCard from "./CommentaryCard";
 
 const Commentary = () => {
   const ismatchSelected = true;
@@ -20,13 +21,14 @@ const Commentary = () => {
     );
   }
   return (
-    <div className="bg-red-400 flex-1 card p-4">
-      <Header className="flex-between">
+    <div className="flex-1 card overflow-hidden">
+      <Header className="flex-between bg-[#B4E5FB] p-4 border-b-2 border-black">
         <h1 className="font-bold text-xl">Live Commentary</h1>
         <p className="px-3 py-0.5 bg-slate-100 rounded-2xl border-2 border-black btn">
           Real Time
         </p>
       </Header>
+      <CommentaryCard />
     </div>
   );
 };
