@@ -12,7 +12,7 @@ const Home = () => {
   const { theme, setTheme } = useTheme();
   return (
     <section className="flex flex-col gap-10">
-      <Header>
+      <Header className="header">
         <div className="w-full flex-between">
           <div className="fle flex-col gap-2">
             <h1 className="text-2xl font-semibold">Sportz</h1>
@@ -40,7 +40,7 @@ const Home = () => {
           </div>
         </div>
       </Header>
-      <div className="flex gap-6">
+      <div className="flex flex-col md:flex-row gap-8">
         <Matches />
         <Commentary />
       </div>
