@@ -35,3 +35,15 @@ export interface Matches {
   homeScore: number;
   awayScore: number;
 }
+
+export interface Commentary {
+  matchId: number;
+  minute: number;
+  sequence: number;
+  period: string;
+  eventType: string;
+  team: string;
+  actor: string;
+  message: string;
+  tags: string[];
+}
