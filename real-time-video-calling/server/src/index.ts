@@ -5,9 +5,13 @@ import cookieParser from "cookie-parser";
 import connectToDatabase from "./db/db";
 import authRouter from "./routes/auth.route";
 import userRouter from "./routes/user.route";
+import { createServer } from "node:http";
+import { setupSocket } from "./socket/socket";
 
 const app: Express = express();
 const PORT = process.env.PORT || 5000;
+
+const server = createServer(app);
 
 app.use(
   cors({
@@ -27,10 +31,12 @@ app.get("/", (req, res) => {
 app.use("/api/auth", authRouter);
 app.use("/api/users", userRouter);
 
+setupSocket(server);
+
 (async () => {
   try {
     await connectToDatabase();
-    app.listen(PORT, () => {
+    server.listen(PORT, () => {
       console.log(`Server is running at http://localhost:${PORT}`);
     });
   } catch (error) {
