@@ -1,5 +1,5 @@
 import { useAuth } from "@/hooks/useAuth";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Sheet,
@@ -11,7 +11,6 @@ import {
 } from "@/components/ui/sheet";
 import {
   Item,
-  ItemActions,
   ItemContent,
   ItemDescription,
   ItemMedia,
@@ -30,7 +29,25 @@ const Dashboard = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedUser, setSelectedUser] = useState(null);
+  const [selectedUser, setSelectedUser] = useState<User | null>(null);
+
+  const allUsers = async () => {
+    try {
+      setLoading(true);
+      const response = await apiClient.get("/users");
+      console.log("Fetched users:", response.data);
+      setUsers(response.data);
+      setLoading(false);
+    } catch (error) {
+      console.error("Failed to fetch users:", error);
+      toast.error("Failed to fetch users");
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    allUsers();
+  }, []);
 
   const filteredUsers = users.filter(
     (u) =>
@@ -51,22 +68,10 @@ const Dashboard = () => {
     }
   };
 
-  const userData = [
-    {
-      name: "John Doe",
-      email: "john.doe@example.com",
-      profilePicture: "https://randomuser.me/api/portraits/men/1.jpg",
-      fullName: "John Doe",
-      userName: "johndoe",
-    },
-    {
-      name: "Jane Smith",
-      email: "jane.smith@example.com",
-      profilePicture: "https://randomuser.me/api/portraits/women/1.jpg",
-      fullName: "Jane Smith",
-      userName: "janesmith",
-    },
-  ];
+  const handleSelectedUser = (userId: string) => {
+    const selected = filteredUsers.find((u) => u._id === userId);
+    setSelectedUser(selected || null);
+  };
 
   return (
     <section className="min-h-screen bg-gray-100">
@@ -87,10 +92,11 @@ const Dashboard = () => {
               />
             </div>
             <div className="flex flex-col gap-4">
-              {userData.map((user) => (
+              {filteredUsers.map((user) => (
                 <Item
                   className="shadow-lg items-center justify-center"
                   key={user.email}
+                  onClick={() => handleSelectedUser(user._id)}
                 >
                   <ItemMedia
                     variant="icon"
@@ -120,6 +126,11 @@ const Dashboard = () => {
           </SheetFooter>
         </SheetContent>
       </Sheet>
+
+      <div className="w-full h-full flex-center">
+        <h1>Hello {user.userName}</h1>
+        <p>Connect with me</p>
+      </div>
     </section>
   );
 };
