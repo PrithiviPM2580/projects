@@ -21,14 +21,17 @@ export const isLogin = async (
     }
 
     const decode = jwt.verify(token, process.env.JWT_SECRET_KEY as string) as {
-      id: string;
+      id?: string;
+      userId?: string;
     };
 
-    if (!decode) {
+    const resolvedUserId = decode?.id || decode?.userId;
+
+    if (!resolvedUserId) {
       return res.status(401).json({ message: "Unauthorized" });
     }
 
-    const user = await User.findById(decode.id).lean();
+    const user = await User.findById(resolvedUserId).lean();
 
     if (!user) {
       return res.status(401).json({ message: "Unauthorized" });
